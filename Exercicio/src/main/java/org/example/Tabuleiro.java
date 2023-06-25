@@ -88,7 +88,7 @@ public class Tabuleiro {
         }
     }
 
-    //Adicionar ao documento
+    //-- Opcional
     public static void movimentaPersonagem(Personagem p, char direcao){
         int lin = 0,col = 0;
         for(int i = 0; i < 10; i++){
