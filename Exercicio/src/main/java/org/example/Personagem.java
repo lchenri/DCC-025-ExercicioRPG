@@ -17,7 +17,7 @@ public abstract class Personagem {
     protected Posicao posicao;
     protected boolean defesaAtiva = false;
     protected boolean poderDisponivel = false;
-    //adicionar o bot e a descrição do método no documento
+    //adicionar o bot e a descrição do método no documento - Adicionado
     protected boolean bot = false;
 
     private Scanner scan = new Scanner(System.in);
