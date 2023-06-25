@@ -83,7 +83,7 @@ public abstract class Personagem {
             System.out.println(this.nome + " escolheu se movimentar " + "(" + i + ", " + j + ") => (" + posicao.getX() + ", " + posicao.getY() + ")." );
         }else{
             System.out.println("Qual direção (C - Cima, B - Baixo, E - Esquerda, D - Direita)? ");
-            //probleminha
+            //probleminha de input buffer. 
             try{
                 movimento = scan.nextLine().toUpperCase();
                 direc = movimento.charAt(0);
