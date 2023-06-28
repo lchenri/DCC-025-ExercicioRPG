@@ -17,21 +17,21 @@ public abstract class Personagem {
     protected Posicao posicao;
     protected boolean defesaAtiva = false;
     protected boolean poderDisponivel = false;
-    //adicionar o bot e a descrição do método no documento - Adicionado
-    protected boolean bot = false;
-
+    //adicionar o bot e a descrição do método no documento
     private Scanner scan = new Scanner(System.in);
 
     public Personagem() {
     }
 
-    private void auxiliaAtacar(int alvo, List<Personagem> inimigosAlcance) {
+    protected void auxiliaAtacar(int alvo, List<Personagem> inimigosAlcance) {
         Personagem atacado;
         atacado = inimigosAlcance.get(alvo);
         if(atacado.defesaAtiva){
             atacado.vida = atacado.vida - this.forcaAtaque + atacado.forcaDefesa;
-            atacado.poderDisponivel = true;
-            System.out.println(atacado.nome +  "(" + atacado.posicao.getX() + ", " + atacado.posicao.getY() + ")" + " desbloqueou seu poder!");
+            if(!atacado.poderDisponivel){
+                atacado.poderDisponivel = true;
+                System.out.println(atacado.nome +  "(" + atacado.posicao.getX() + ", " + atacado.posicao.getY() + ")" + " desbloqueou seu poder!");
+            }
         }else{
             atacado.vida = atacado.vida - this.forcaAtaque;
         }
@@ -43,26 +43,16 @@ public abstract class Personagem {
         int alvo;
         Personagem atacado;
         List<Personagem> inimigosAlcance = Tabuleiro.retornaPersonagens(this);
-        if(bot){
-            if(inimigosAlcance.isEmpty())
-                System.out.println(this.nome +  "(" + this.posicao.getX() + ", " + this.posicao.getY() + ")" + " tentou atacar mas não havia ninguém no seu range.");
-            else{
-                Random rand = new Random();
-                alvo = rand.nextInt(inimigosAlcance.size());
-                auxiliaAtacar(alvo, inimigosAlcance);
+        if(inimigosAlcance.isEmpty())
+            System.out.println(this.nome +  "(" + this.posicao.getX() + ", " + this.posicao.getY() + ")" + " tentou atacar mas não havia ninguém no seu range.");
+        else{
+            System.out.println("Inimigos no alcance de ataque:");
+            for(Personagem inimigo : inimigosAlcance){
+                System.out.println(inimigosAlcance.indexOf(inimigo) + " - " + inimigo.nome + "=> (" + inimigo.posicao.getX() + ", " + inimigo.posicao.getY() + ")");
             }
-        }else{
-            if(inimigosAlcance.isEmpty())
-                System.out.println(this.nome +  "(" + this.posicao.getX() + ", " + this.posicao.getY() + ")" + " tentou atacar mas não havia ninguém no seu range.");
-            else{
-                System.out.println("Inimigos no alcance de ataque:");
-                for(Personagem inimigo : inimigosAlcance){
-                    System.out.println(inimigosAlcance.indexOf(inimigo) + " - " + inimigo.nome + "=> (" + inimigo.posicao.getX() + ", " + inimigo.posicao.getY() + ")");
-                }
-                System.out.println("Digite o alvo: ");
-                alvo = scan.nextInt();
-                auxiliaAtacar(alvo, inimigosAlcance);
-            }
+            System.out.println("Digite o alvo: ");
+            alvo = scan.nextInt();
+            auxiliaAtacar(alvo, inimigosAlcance);
         }
     }
 
@@ -76,27 +66,17 @@ public abstract class Personagem {
         String movimento;
         char direc;
         int i = this.posicao.getX(),j = this.posicao.getY();
-        if(bot){
-            Random rand = new Random();
-            char[] direcoes= {'C', 'B', 'E', 'D'};
-            Tabuleiro.movimentaPersonagem(this, direcoes[rand.nextInt(4)]);
-            System.out.println(this.nome + " escolheu se movimentar " + "(" + i + ", " + j + ") => (" + posicao.getX() + ", " + posicao.getY() + ")." );
-        }else{
-            System.out.println("Qual direção (C - Cima, B - Baixo, E - Esquerda, D - Direita)? ");
-            //probleminha de input buffer. 
-            try{
-                movimento = scan.nextLine().toUpperCase();
-                direc = movimento.charAt(0);
-            } catch(StringIndexOutOfBoundsException e){
-                movimento = scan.nextLine().toUpperCase();
-                direc = movimento.charAt(0);
-            }
-            /*movimento = scan.nextLine().toUpperCase();
-            direc = movimento.charAt(0);*/
-            Tabuleiro.movimentaPersonagem(this, direc);
-            System.out.println(this.nome + " escolheu se movimentar " + "(" + i + ", " + j + ") => (" + posicao.getX() + ", " + posicao.getY() + ")." );
+        System.out.println("Qual direção (C - Cima, B - Baixo, E - Esquerda, D - Direita)? ");
+        //probleminha
+        try{
+            movimento = scan.nextLine().toUpperCase();
+            direc = movimento.charAt(0);
+        } catch(StringIndexOutOfBoundsException e){
+            movimento = scan.nextLine().toUpperCase();
+            direc = movimento.charAt(0);
         }
-
+        Tabuleiro.movimentaPersonagem(this, direc);
+        System.out.println(this.nome + " escolheu se movimentar " + "(" + i + ", " + j + ") => (" + posicao.getX() + ", " + posicao.getY() + ")." );
     }
 
     public boolean verificaMorte(){
@@ -114,4 +94,8 @@ public abstract class Personagem {
         posicao.setY(y);
     }
     public abstract void invocarPoder();
+
+    public int getAtaque() {
+        return this.forcaAtaque;
+    }
 }

@@ -38,13 +38,16 @@ public class Main {
     }
 
     private static void acaoAleatoriaInimigo(int acaoInimigo, Personagem bot){
-
+        bot.poderDisponivel = true;
         if(acaoInimigo == 0){
-            bot.atacar();
+            //bot.atacar();
+            bot.invocarPoder();
         }else if(acaoInimigo == 1){
-            bot.defender();
+            //bot.defender();
+            bot.invocarPoder();
         }else if(acaoInimigo == 2){
-            bot.movimentar();
+            //bot.movimentar();
+            bot.invocarPoder();
         }else if(acaoInimigo == 3 && bot.poderDisponivel){
             bot.invocarPoder();
         }else{
@@ -137,16 +140,16 @@ public class Main {
         }
     }
 
-    private static Personagem auxGeraInimigos(){
+    private static Inimigo auxGeraInimigos(){
         Random rand = new Random();
         int escolha = rand.nextInt(3) + 1;
         switch (escolha){
             case 1:
-                return new Guerreiro();
+                return new Inimigo(new Guerreiro());
             case 2:
-                return new Mago();
+                return new Inimigo(new Mago());
             case 3:
-                return new Arqueiro();
+                return new Inimigo(new Arqueiro());
             default:
                 System.out.println("Erro");
                 return null;
@@ -156,9 +159,6 @@ public class Main {
         inimigos = new ArrayList<>();
         for(int i = 0; i < numeroInimigos; i++){
             inimigos.add(auxGeraInimigos());
-        }
-        for(Personagem inimigo : inimigos){
-            inimigo.bot = true;
         }
     }
     private static void inicio(){

@@ -33,26 +33,20 @@ public class Mago extends Personagem {
             return;
         }
         Personagem vidaTrocadaAlvo;
-        if(bot){
-            alvo = rand.nextInt(inimigosAlcance.size());
-            vidaTrocadaAlvo = inimigosAlcance.get(alvo);
-            aux = this.vida;
-            this.vida = vidaTrocadaAlvo.vida;
-            vidaTrocadaAlvo.vida = aux;
-        }else{
-            System.out.println("Inimigos no alcance de ataque:");
-            for(Personagem inimigo : inimigosAlcance){
-                System.out.println(inimigosAlcance.indexOf(inimigo) + " - " + inimigo.nome + "=> (" + inimigo.posicao.getX() + ", " + inimigo.posicao.getY() + ")");
-            }
-            System.out.println("Digite o alvo: ");
-            alvo = scan.nextInt();
-            alvo = rand.nextInt(inimigosAlcance.size());
-            vidaTrocadaAlvo = inimigosAlcance.get(alvo);
-            aux = this.vida;
-            this.vida = vidaTrocadaAlvo.vida;
-            vidaTrocadaAlvo.vida = aux;
+
+        System.out.println("Inimigos no alcance de ataque:");
+        for(Personagem inimigo : inimigosAlcance){
+            System.out.println(inimigosAlcance.indexOf(inimigo) + " - " + inimigo.nome + "=> (" + inimigo.posicao.getX() + ", " + inimigo.posicao.getY() + ")");
         }
-        System.out.println(this.nome + "(" +this.posicao.getX() + ", " + this.posicao .getY() + ") trocou de vida com " + inimigosAlcance.get(alvo).nome + "(" + this.posicao.getX() + ", " + this.posicao .getY() + ")");
+        System.out.println("Digite o alvo: ");
+        alvo = scan.nextInt();
+        alvo = rand.nextInt(inimigosAlcance.size());
+        vidaTrocadaAlvo = inimigosAlcance.get(alvo);
+        aux = this.vida;
+        this.vida = vidaTrocadaAlvo.vida;
+        vidaTrocadaAlvo.vida = aux;
+        //}
+        System.out.println(this.nome + "(" +this.posicao.getX() + ", " + this.posicao .getY() + ") trocou de vida com " + inimigosAlcance.get(alvo).nome + "(" + inimigosAlcance.get(alvo).posicao.getX() + ", " + inimigosAlcance.get(alvo).posicao.getY() + ")");
         super.poderDisponivel = false;
     }
 

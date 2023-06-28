@@ -22,7 +22,7 @@ public class Guerreiro extends Personagem {
     public void invocarPoder() {
         int forcaATK = this.forcaAtaque;
         super.forcaAtaque = super.forcaAtaque * 3;
-        System.out.println(this.nome + " usou seu Poder!");
+        System.out.println(this.nome + this.letra +"(" + this.posicao.getX() + ", " + this.posicao.getY() + ")" + ": usou seu Poder!");
         atacar();
         super.forcaAtaque = forcaATK;
         super.poderDisponivel = false;
